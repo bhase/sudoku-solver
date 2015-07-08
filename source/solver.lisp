@@ -3,6 +3,11 @@
 
 (in-package #:sudoku-solver)
 
-(export 'add)
-(defun add (n1 n2)
-  (+ n1 n2))
+(defparameter *sudoku-size* 9)
+
+;(export 'add)
+(defun row (x y)
+  (loop for i to (- *sudoku-size* 1) collect `(,x ,i)))
+
+(defun column (x y)
+  (loop for i to (- *sudoku-size* 1) collect `(,i ,y)))
