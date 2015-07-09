@@ -13,8 +13,9 @@
   (loop for i to (- *sudoku-size* 1) collect `(,i ,y)))
 
 (defun box (x y)
-  (let ((start-x (* 3 (truncate (/ x 3))))
-        (start-y (* 3 (truncate (/ y 3)))))
-    (loop for i from 0 below 3
-          append (loop for j from 0 below 3
+  (let* ((box-size (sqrt *sudoku-size*))
+         (start-x (* box-size (truncate (/ x box-size))))
+         (start-y (* box-size (truncate (/ y box-size)))))
+    (loop for i from 0 below box-size
+          append (loop for j from 0 below box-size
                         collect (list (+ start-x i) (+ start-y j))))))

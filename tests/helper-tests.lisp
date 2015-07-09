@@ -5,7 +5,7 @@
 
 (in-package :sudoku-solver-test)
 
-(plan 8)
+(plan 14)
 
 ;; The internal method row delivers the array indices belonging
 ;; to the row of this cell index. Although it is an implementation detail
@@ -24,5 +24,17 @@
 (is (sudoku-solver::box 0 0) '((0 0) (0 1) (0 2) (1 0) (1 1) (1 2) (2 0) (2 1) (2 2)))
 (is (sudoku-solver::box 8 8) '((6 6) (6 7) (6 8) (7 6) (7 7) (7 8) (8 6) (8 7) (8 8)))
 (is (sudoku-solver::box 3 6) '((3 6) (3 7) (3 8) (4 6) (4 7) (4 8) (5 6) (5 7) (5 8)))
+
+;; the internal methods should be able to deal with different sizes
+;; as long as it is squared
+(setf sudoku-solver::*sudoku-size* 4)
+(is (sudoku-solver::row 1 2) '((1 0) (1 1) (1 2) (1 3)))
+(is (sudoku-solver::column 1 2) '((0 2) (1 2) (2 2) (3 2)))
+(is (sudoku-solver::box 1 2) '((0 2) (0 3) (1 2) (1 3)))
+
+(setf sudoku-solver::*sudoku-size* 16)
+(is (length (sudoku-solver::row 1 2)) 16)
+(is (length (sudoku-solver::column 1 2)) 16)
+(is (length (sudoku-solver::box 1 2)) 16)
 
 (finalize)
