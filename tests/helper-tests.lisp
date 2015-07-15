@@ -33,11 +33,21 @@
 ;; the internal methods should be able to deal with different sizes
 ;; as long as it is squared
 (subtest "Changing *sudoku-size* to 4"
-         (plan 3)
+         (plan 4)
          (let ((sudoku-solver::*sudoku-size* 4))
            (is (sudoku-solver::row 1 2) '((1 0) (1 1) (1 2) (1 3)))
            (is (sudoku-solver::column 1 2) '((0 2) (1 2) (2 2) (3 2)))
-           (is (sudoku-solver::box 1 2) '((0 2) (0 3) (1 2) (1 3))))
+           (is (sudoku-solver::box 1 2) '((0 2) (0 3) (1 2) (1 3)))
+           (is-print (display (generate-board-rows))
+"
++-----+-----+
+| 1 1 | 1 1 |
+| 2 2 | 2 2 |
++-----+-----+
+| 3 3 | 3 3 |
+| 4 4 | 4 4 |
++-----+-----+"))
+
          (finalize))
 
 (subtest "Changing *sudoku-size* to 16"
