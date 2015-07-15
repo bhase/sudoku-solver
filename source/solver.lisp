@@ -13,11 +13,12 @@
 (defun display (board)
   (let* ((box-size (sqrt *sudoku-size*))
          (line (format nil "~%~v@{~A~:*~}+" box-size
-                       (format nil "+~v,,,v<~>" (1+ (* 2 box-size)) #\-))))
+                       (format nil "+~v,,,v<~>" (1+ (* 2 box-size)) #\-)))
+         (format-string (format nil "~~%~~{~~<| ~v@{~A ~:*~}~~>~~}|" box-size "~x")))
     (dotimes (k *sudoku-size*)
       (when (eql 0 (mod k box-size))
         (princ line))
-      (format t "~%~{~<| ~x ~x ~x ~>~}|" (get-row board k)))
+      (format t format-string (get-row board k)))
     (princ line)))
 
 (defun get-row (board index)
