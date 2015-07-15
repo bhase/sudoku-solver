@@ -5,7 +5,12 @@
 
 (in-package :sudoku-solver-test)
 
-(plan 14)
+(defun generate-board-rows ()
+  (make-array (list sudoku-solver::*sudoku-size* sudoku-solver::*sudoku-size*) :initial-contents
+              (loop for i from 1 to sudoku-solver::*sudoku-size* collect
+                    (loop for j from 1 to sudoku-solver::*sudoku-size* collect (list j)))))
+
+(plan 11)
 
 ;; The internal method row delivers the array indices belonging
 ;; to the row of this cell index. Although it is an implementation detail
@@ -27,14 +32,36 @@
 
 ;; the internal methods should be able to deal with different sizes
 ;; as long as it is squared
-(setf sudoku-solver::*sudoku-size* 4)
-(is (sudoku-solver::row 1 2) '((1 0) (1 1) (1 2) (1 3)))
-(is (sudoku-solver::column 1 2) '((0 2) (1 2) (2 2) (3 2)))
-(is (sudoku-solver::box 1 2) '((0 2) (0 3) (1 2) (1 3)))
+(subtest "Changing *sudoku-size* to 4"
+         (plan 3)
+         (let ((sudoku-solver::*sudoku-size* 4))
+           (is (sudoku-solver::row 1 2) '((1 0) (1 1) (1 2) (1 3)))
+           (is (sudoku-solver::column 1 2) '((0 2) (1 2) (2 2) (3 2)))
+           (is (sudoku-solver::box 1 2) '((0 2) (0 3) (1 2) (1 3))))
+         (finalize))
 
-(setf sudoku-solver::*sudoku-size* 16)
-(is (length (sudoku-solver::row 1 2)) 16)
-(is (length (sudoku-solver::column 1 2)) 16)
-(is (length (sudoku-solver::box 1 2)) 16)
+(subtest "Changing *sudoku-size* to 16"
+         (plan 3)
+         (let ((sudoku-solver::*sudoku-size* 16))
+           (is (length (sudoku-solver::row 1 2)) 16)
+           (is (length (sudoku-solver::column 1 2)) 16)
+           (is (length (sudoku-solver::box 1 2)) 16))
+         (finalize))
+
+(is-print (display (generate-board-rows))
+"
++-------+-------+-------+
+| 1 1 1 | 1 1 1 | 1 1 1 |
+| 2 2 2 | 2 2 2 | 2 2 2 |
+| 3 3 3 | 3 3 3 | 3 3 3 |
++-------+-------+-------+
+| 4 4 4 | 4 4 4 | 4 4 4 |
+| 5 5 5 | 5 5 5 | 5 5 5 |
+| 6 6 6 | 6 6 6 | 6 6 6 |
++-------+-------+-------+
+| 7 7 7 | 7 7 7 | 7 7 7 |
+| 8 8 8 | 8 8 8 | 8 8 8 |
+| 9 9 9 | 9 9 9 | 9 9 9 |
++-------+-------+-------+")
 
 (finalize)

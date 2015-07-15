@@ -5,7 +5,25 @@
 
 (defparameter *sudoku-size* 9)
 
-;(export 'add)
+;| 3 3 3 | 3 3 3 | 3 3 3 |
+;+-------+-------+-------+
+;| 4 4 4 | 4 4 4 | 4 4 4 |
+;
+(export 'display)
+(defun display (board)
+  (let* ((box-size (sqrt *sudoku-size*))
+         (line (format nil "~%~v@{~A~:*~}+" box-size
+                       (format nil "+~v,,,v<~>" (1+ (* 2 box-size)) #\-))))
+    (dotimes (k *sudoku-size*)
+      (when (eql 0 (mod k box-size))
+        (princ line))
+      (format t "~%~{~<| ~x ~x ~x ~>~}|" (get-row board k)))
+    (princ line)))
+
+(defun get-row (board index)
+  (loop for i below *sudoku-size*
+        append (aref board i index)))
+
 (defun row (x y)
   (loop for i to (- *sudoku-size* 1) collect `(,x ,i)))
 
