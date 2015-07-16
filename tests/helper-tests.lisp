@@ -10,7 +10,12 @@
               (loop for i from 1 to sudoku-solver::*sudoku-size* collect
                     (loop for j from 1 to sudoku-solver::*sudoku-size* collect (list j)))))
 
-(plan 11)
+(defun generate-board-columns ()
+  (make-array (list sudoku-solver::*sudoku-size* sudoku-solver::*sudoku-size*) :initial-contents
+              (loop for i from 1 to sudoku-solver::*sudoku-size* collect
+                    (loop for j from 1 to sudoku-solver::*sudoku-size* collect (list i)))))
+
+(plan 12)
 
 ;; The internal method row delivers the array indices belonging
 ;; to the row of this cell index. Although it is an implementation detail
@@ -74,4 +79,19 @@
 | 9 9 9 | 9 9 9 | 9 9 9 |
 +-------+-------+-------+")
 
+(is-print (display (generate-board-columns))
+"
++-------+-------+-------+
+| 1 2 3 | 4 5 6 | 7 8 9 |
+| 1 2 3 | 4 5 6 | 7 8 9 |
+| 1 2 3 | 4 5 6 | 7 8 9 |
++-------+-------+-------+
+| 1 2 3 | 4 5 6 | 7 8 9 |
+| 1 2 3 | 4 5 6 | 7 8 9 |
+| 1 2 3 | 4 5 6 | 7 8 9 |
++-------+-------+-------+
+| 1 2 3 | 4 5 6 | 7 8 9 |
+| 1 2 3 | 4 5 6 | 7 8 9 |
+| 1 2 3 | 4 5 6 | 7 8 9 |
++-------+-------+-------+")
 (finalize)
