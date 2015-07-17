@@ -22,8 +22,12 @@
     (princ line)))
 
 (defun get-row (board index)
-  (loop for i below *sudoku-size*
-        append (aref board i index)))
+  (mapcar (lambda (e)
+            (if (eq 1 (length e))
+              (car e)
+              #\.))
+          (loop for i below *sudoku-size*
+                collect (aref board i index))))
 
 (defun row (x y)
   (loop for i to (- *sudoku-size* 1) collect `(,x ,i)))

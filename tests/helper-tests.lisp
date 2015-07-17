@@ -15,7 +15,7 @@
               (loop for i from 1 to sudoku-solver::*sudoku-size* collect
                     (loop for j from 1 to sudoku-solver::*sudoku-size* collect (list i)))))
 
-(plan 12)
+(plan 13)
 
 ;; The internal method row delivers the array indices belonging
 ;; to the row of this cell index. Although it is an implementation detail
@@ -94,4 +94,24 @@
 | 1 2 3 | 4 5 6 | 7 8 9 |
 | 1 2 3 | 4 5 6 | 7 8 9 |
 +-------+-------+-------+")
+
+(let ((sudoku (generate-board-rows)))
+      (setf (aref sudoku 1 1) '(1 2 3))
+      (is-print (display sudoku)
+"
++-------+-------+-------+
+| 1 1 1 | 1 1 1 | 1 1 1 |
+| 2 . 2 | 2 2 2 | 2 2 2 |
+| 3 3 3 | 3 3 3 | 3 3 3 |
++-------+-------+-------+
+| 4 4 4 | 4 4 4 | 4 4 4 |
+| 5 5 5 | 5 5 5 | 5 5 5 |
+| 6 6 6 | 6 6 6 | 6 6 6 |
++-------+-------+-------+
+| 7 7 7 | 7 7 7 | 7 7 7 |
+| 8 8 8 | 8 8 8 | 8 8 8 |
+| 9 9 9 | 9 9 9 | 9 9 9 |
++-------+-------+-------+"))
+
+
 (finalize)
